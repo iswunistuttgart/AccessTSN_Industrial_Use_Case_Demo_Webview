@@ -12,9 +12,9 @@ wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/enterprise/deb stable-main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 echo "copying provision files"
 sudo mkdir -p /etc/grafana/provisioning
-sudo cp ./provisioning/* /etc/grafana/provisioning
+sudo cp -r ./provisioning/* /etc/grafana/provisioning
 echo "starting grafana server"
-sudo systemctl deamon-reload
+sudo systemctl daemon-reload
 sudo systemctl start grafana-server
 sudo systemctl status grafana-server
 echo "configuring grafana-server to start at boot"
