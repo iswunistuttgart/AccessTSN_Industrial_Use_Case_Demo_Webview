@@ -15,10 +15,11 @@ sudo apt-get install grafana
 echo "copying provision files"
 sudo mkdir -p /etc/grafana/provisioning
 sudo cp -r ./provisioning/* /etc/grafana/provisioning
-echo "starting grafana server"
-sudo systemctl daemon-reload
-sudo systemctl start grafana-server
-sudo systemctl status grafana-server
 echo "configuring grafana-server to start at boot"
+sudo systemctl daemon-reload
 sudo systemctl enable grafana-server.service
+echo "configuring grafana-server to start at boot"
+sudo systemctl start grafana-server
+gnome-terminal -e "systemctl status grafana-server"
+echo "configuring grafana-server to start at boot"
 /usr/bin/firefox&  localhost:3000
