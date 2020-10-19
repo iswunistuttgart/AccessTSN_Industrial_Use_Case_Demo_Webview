@@ -19,4 +19,3 @@ echo "configuring grafana-server to start at boot"
 sudo systemctl daemon-reload
 sudo systemctl enable grafana-server.service
 sudo systemctl start grafana-server
-sudo gnome-terminal -- "systemctl status grafana-server"

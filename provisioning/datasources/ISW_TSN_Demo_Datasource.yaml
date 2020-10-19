@@ -26,7 +26,7 @@ datasources:
     # <string> database user, if used
     user: admin
     # <string> database name, if used
-    database: site
+    database: tsn_demo
     # <bool> enable/disable basic auth
 #    basicAuth: enable
     # <string> basic auth username
