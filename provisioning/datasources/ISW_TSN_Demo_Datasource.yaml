@@ -22,19 +22,19 @@ datasources:
     # <string> url
     url: http://localhost:8086
     # <string> Deprecated, use secureJsonData.password
-#    password:
+    password: pass
     # <string> database user, if used
-#    user:
+    user: admin
     # <string> database name, if used
     database: site
     # <bool> enable/disable basic auth
-    basicAuth: enable
+#    basicAuth: enable
     # <string> basic auth username
-    basicAuthUser: grafana
+#    basicAuthUser: grafana
     # <string> Deprecated, use secureJsonData.basicAuthPassword
-    basicAuthPassword: grafana
+#    basicAuthPassword: grafana
     # <bool> enable/disable with credentials headers
-    withCredentials: false
+#    withCredentials: false
     # <bool> mark as default datasource. Max one per org
     isDefault: true
     # <map> fields that will be converted to json and stored in jsonData
@@ -49,9 +49,9 @@ datasources:
 #      tlsClientCert: '...'
 #      tlsClientKey: '...'
       # <string> database password, if used
-      password:
+#      password:
       # <string> basic auth password
-      basicAuthPassword:
+#      basicAuthPassword:
     version: 1
     # <bool> allow users to edit datasources from the UI.
     editable: false
