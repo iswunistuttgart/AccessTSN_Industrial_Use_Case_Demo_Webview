@@ -19,7 +19,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": "InfluxDB",
+      "datasource": "tsn_demo",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -234,7 +234,7 @@
       "type": "table"
     },
     {
-      "datasource": "InfluxDB",
+      "datasource": "tsn_demo",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -331,7 +331,7 @@
       "type": "table"
     },
     {
-      "datasource": "InfluxDB",
+      "datasource": "tsn_demo",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -690,7 +690,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "tsn_demo",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -991,7 +991,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "tsn_demo",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -1135,7 +1135,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "tsn_demo",
       "fieldConfig": {
         "defaults": {
           "custom": {}
