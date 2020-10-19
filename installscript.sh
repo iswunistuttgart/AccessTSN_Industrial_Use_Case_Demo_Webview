@@ -13,13 +13,10 @@ echo "deb https://packages.grafana.com/enterprise/deb stable main" | sudo tee -a
 sudo apt-get update
 sudo apt-get install grafana
 echo "copying provision files"
-#sudo mkdir -p /etc/grafana
 sudo cp -r provisioning/ /etc/grafana/
+sudo chgrp -R grafana /etc/grafana/provisioning/
 echo "configuring grafana-server to start at boot"
 sudo systemctl daemon-reload
 sudo systemctl enable grafana-server.service
-echo "configuring grafana-server to start at boot"
 sudo systemctl start grafana-server
-gnome-terminal -- "systemctl status grafana-server"
-echo "configuring grafana-server to start at boot"
-xdg-open http://localhost:3000
+sudo gnome-terminal -- "systemctl status grafana-server"
