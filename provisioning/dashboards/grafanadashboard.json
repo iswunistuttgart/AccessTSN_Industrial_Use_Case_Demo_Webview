@@ -155,7 +155,7 @@
           }
         ]
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -300,7 +300,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -331,7 +331,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Emergency Stop activated",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -398,7 +407,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -423,7 +432,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Machine on",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -490,7 +508,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -515,7 +533,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Spindle enabled",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -582,7 +609,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -607,7 +634,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Spindlebreak",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -674,7 +710,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -699,7 +735,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "X-Axis enabled",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -766,7 +811,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -791,7 +836,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Y-Axis enabled",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -858,7 +912,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -883,7 +937,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Z-Axis enabled",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -950,7 +1013,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -975,7 +1038,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "X-Axis faulty",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1042,7 +1114,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -1067,7 +1139,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Y-Axis faulty",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1134,7 +1215,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -1159,7 +1240,16 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Z-Axis faulty",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "last"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1384,7 +1474,7 @@
           }
         ]
       },
-      "pluginVersion": "7.0.0",
+      "pluginVersion": "7.2.0",
       "targets": [
         {
           "groupBy": [],
@@ -2094,8 +2184,8 @@
       }
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 25,
+  "refresh": "10s",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2121,5 +2211,5 @@
   },
   "timezone": "",
   "title": "TSN_Demo",
-  "version": 5
+  "version": 3
 }
