@@ -18,7 +18,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": "InfluxDB",
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -233,7 +233,7 @@
       "type": "table"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -339,7 +339,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -440,7 +440,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -541,7 +541,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -642,7 +642,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "TSN_ISW_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -743,7 +743,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -844,7 +844,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -945,7 +945,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1046,7 +1046,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1147,7 +1147,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -1248,7 +1248,7 @@
       "type": "stat"
     },
     {
-      "datasource": "InfluxDB",
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1607,7 +1607,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "ISW_TSN_Demo",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1908,7 +1908,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -2052,7 +2052,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "InfluxDB",
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {}
