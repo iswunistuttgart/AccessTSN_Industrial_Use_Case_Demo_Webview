@@ -155,7 +155,7 @@
           }
         ]
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -230,6 +230,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Hardware Status Time",
+      "transformations": [],
       "type": "table"
     },
     {
@@ -244,10 +245,10 @@
             {
               "from": "",
               "id": 0,
-              "text": "\"not active\"",
+              "text": "not active",
               "to": "",
               "type": 1,
-              "value": "\"0\""
+              "value": "0"
             },
             {
               "from": "",
@@ -299,7 +300,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -309,7 +310,7 @@
           "query": "SELECT \"Emergency Stop activated\" FROM \"Main Output Variables\" WHERE $timeFilter",
           "rawQuery": false,
           "refId": "A",
-          "resultFormat": "table",
+          "resultFormat": "time_series",
           "select": [
             [
               {
@@ -317,6 +318,10 @@
                   "Emergency Stop activated"
                 ],
                 "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
               }
             ]
           ],
@@ -326,16 +331,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Emergency Stop activated",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -402,7 +398,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -410,7 +406,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
-          "resultFormat": "table",
+          "resultFormat": "time_series",
           "select": [
             [
               {
@@ -427,16 +423,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Machine on",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -503,7 +490,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -528,16 +515,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Spindle enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -604,7 +582,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -629,20 +607,11 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Spindlebreak",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
-      "datasource": "TSN_ISW_Demo",
+      "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -705,7 +674,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -730,16 +699,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "X-Axis enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -806,7 +766,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -831,16 +791,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Y-Axis enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -907,7 +858,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -932,16 +883,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Z-Axis enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -1008,7 +950,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -1033,16 +975,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "X-Axis faulty",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -1109,7 +1042,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -1134,16 +1067,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Y-Axis faulty",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -1210,7 +1134,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -1235,16 +1159,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Z-Axis faulty",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -1275,7 +1190,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 146
+                "value": 154
               }
             ]
           },
@@ -1411,7 +1326,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 110
+                "value": null
               }
             ]
           },
@@ -1469,7 +1384,7 @@
           }
         ]
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.0.0",
       "targets": [
         {
           "groupBy": [],
@@ -1803,7 +1718,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.2.0",
@@ -1940,7 +1856,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.2.0",
@@ -2084,7 +2001,8 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "alertThreshold": true,
+        "dataLinks": []
       },
       "percentage": false,
       "pluginVersion": "7.2.0",
@@ -2177,7 +2095,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 26,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2188,9 +2106,20 @@
     "to": "now"
   },
   "timepicker": {
-    "hidden": false
+    "hidden": false,
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
   },
   "timezone": "",
   "title": "TSN_Demo",
-  "version": 24
+  "version": 5
 }
