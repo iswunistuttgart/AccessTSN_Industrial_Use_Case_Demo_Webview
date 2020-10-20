@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "panels": [
     {
@@ -2193,6 +2192,5 @@
   },
   "timezone": "",
   "title": "TSN_Demo",
-  "uid": "t6jR7hKGz",
   "version": 24
 }
