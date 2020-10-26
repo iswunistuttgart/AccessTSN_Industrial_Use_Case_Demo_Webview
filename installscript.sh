@@ -2,8 +2,8 @@
 
 echo "installing InfluxDB"
 wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-source /etc/lsb-release
-echo "deb https://repos.influxdata.com/$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+source /etc/os-release
+echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
 apt-get update && sudo apt-get install influxdb
 systemctl unmask influxdb.service
 echo "influxdb -version"
