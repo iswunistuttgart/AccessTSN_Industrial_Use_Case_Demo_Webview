@@ -22,7 +22,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": "left",
+            "align": "center",
             "filterable": false
           },
           "mappings": [],
@@ -155,70 +155,22 @@
           }
         ]
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
           "measurement": "Main Output Variables",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"Emergency Stop activated\", \"Machine on\", \"Spindle enabled\", \"Spindlebrake\", \"X-Axis enabled\", \"Y-Axis enabled\", \"Z-Axis enabled\" FROM \"Main Output Variables\" WHERE $timeFilter",
-          "rawQuery": true,
+          "query": "SELECT \"Machine on\" FROM \"Main Output Variables\" WHERE $timeFilter",
+          "rawQuery": false,
           "refId": "A",
-          "resultFormat": "table",
+          "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "Emergency Stop activated"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
                   "Machine on"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Spindle enabled"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Spindlebrake"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "X-Axis enabled"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Y-Axis enabled"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Z-Axis enabled"
                 ],
                 "type": "field"
               }
@@ -248,7 +200,7 @@
               "text": "not active",
               "to": "",
               "type": 1,
-              "value": "0"
+              "value": "\"false\""
             },
             {
               "from": "",
@@ -256,7 +208,7 @@
               "text": "active",
               "to": "",
               "type": 1,
-              "value": "1"
+              "value": "\"true\""
             }
           ],
           "thresholds": {
@@ -267,11 +219,11 @@
                 "value": null
               },
               {
-                "color": "semi-dark-red",
+                "color": "semi-dark-green",
                 "value": 0
               },
               {
-                "color": "semi-dark-green",
+                "color": "semi-dark-red",
                 "value": 1
               }
             ]
@@ -300,7 +252,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
@@ -310,7 +262,7 @@
           "query": "SELECT \"Emergency Stop activated\" FROM \"Main Output Variables\" WHERE $timeFilter",
           "rawQuery": false,
           "refId": "A",
-          "resultFormat": "time_series",
+          "resultFormat": "table",
           "select": [
             [
               {
@@ -407,7 +359,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
@@ -508,7 +460,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
@@ -576,11 +528,11 @@
                 "value": null
               },
               {
-                "color": "semi-dark-red",
+                "color": "semi-dark-green",
                 "value": 0
               },
               {
-                "color": "semi-dark-green",
+                "color": "semi-dark-red",
                 "value": 1
               }
             ]
@@ -609,7 +561,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
@@ -647,6 +599,193 @@
       "type": "stat"
     },
     {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 9,
+        "x": 12,
+        "y": 0
+      },
+      "id": 48,
+      "options": {
+        "content": "#Your Logo Here!\n<br/>\n<img src=/public/img/file.name>\nset on HTML",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Logo place holder",
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 46,
+      "options": {
+        "content": "<p align=\"center\"><img src=/public/img/isw.png></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 1,
+        "x": 0,
+        "y": 3
+      },
+      "id": 44,
+      "options": {
+        "content": "***\nX-Axis\n***\nY-Axis\n***\nZ-Axis",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "text"
+    },
+    {
       "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
@@ -690,33 +829,35 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 5,
         "w": 2,
-        "x": 12,
-        "y": 0
+        "x": 1,
+        "y": 3
       },
       "id": 22,
       "options": {
         "colorMode": "background",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "/^Last$/",
+          "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
           "measurement": "Main Output Variables",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"X-Axis enabled\", \"Y-Axis enabled\", \"Z-Axis enabled\" FROM \"Main Output Variables\" WHERE $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -734,42 +875,16 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "X-Axis enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "title": "Axis enabled",
+      "transformations": [],
       "type": "stat"
     },
     {
-      "datasource": "ISW_TSN_Demo",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "not active",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "active",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -778,11 +893,11 @@
                 "value": null
               },
               {
-                "color": "semi-dark-red",
+                "color": "semi-dark-green",
                 "value": 0
               },
               {
-                "color": "semi-dark-green",
+                "color": "semi-dark-red",
                 "value": 1
               }
             ]
@@ -791,40 +906,42 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 5,
         "w": 2,
-        "x": 14,
-        "y": 0
+        "x": 3,
+        "y": 3
       },
-      "id": 24,
+      "id": 34,
       "options": {
         "colorMode": "background",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "/^Last$/",
+          "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
-          "measurement": "Main Output Variables",
+          "measurement": "Additional Output Variables",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"X-Axis at home\", \"Y-Axis at home\", \"Z-Axis at home\" FROM \"Additional Output Variables\" WHERE $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "Y-Axis enabled"
+                  "X-Axis at home"
                 ],
                 "type": "field"
               }
@@ -835,42 +952,15 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Y-Axis enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "title": "Axis at home",
       "type": "stat"
     },
     {
-      "datasource": "ISW_TSN_Demo",
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "not active",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "active",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -879,11 +969,11 @@
                 "value": null
               },
               {
-                "color": "semi-dark-red",
+                "color": "semi-dark-green",
                 "value": 0
               },
               {
-                "color": "semi-dark-green",
+                "color": "semi-dark-red",
                 "value": 1
               }
             ]
@@ -892,40 +982,42 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 16,
-        "y": 0
+        "h": 5,
+        "w": 3,
+        "x": 5,
+        "y": 3
       },
-      "id": 26,
+      "id": 42,
       "options": {
         "colorMode": "background",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "/^Last$/",
+          "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
-          "measurement": "Main Output Variables",
+          "measurement": "Additional Output Variables",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"Y-Axis at neg Endstop\", \"Y-Axis at pos Endstop\", \"Z-Axis at pos Endstop\" FROM \"Additional Output Variables\" WHERE $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "Z-Axis enabled"
+                  "Y-Axis at neg Endstop"
                 ],
                 "type": "field"
               }
@@ -936,17 +1028,83 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Z-Axis enabled",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
+      "title": "Axis at pos Endstop",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 0
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 1
+              }
             ]
           }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 8,
+        "y": 3
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "7.2.2",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "Additional Output Variables",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"X-Axis at neg Endstop\", \"Y-Axis at neg Endstop\", \"Z-Axis at neg Endstop\" FROM \"Additional Output Variables\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "X-Axis at neg Endstop"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Axis at neg endstop",
       "type": "stat"
     },
     {
@@ -980,11 +1138,11 @@
                 "value": null
               },
               {
-                "color": "semi-dark-red",
+                "color": "semi-dark-green",
                 "value": 0
               },
               {
-                "color": "semi-dark-green",
+                "color": "semi-dark-red",
                 "value": 1
               }
             ]
@@ -993,33 +1151,35 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 5,
         "w": 2,
-        "x": 18,
-        "y": 0
+        "x": 11,
+        "y": 3
       },
       "id": 28,
       "options": {
         "colorMode": "background",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
           ],
-          "fields": "/^Last$/",
+          "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "textMode": "value"
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
           "measurement": "Main Input Variables",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT \"X-Axis faulty\" , \"Y-Axis faulty\" , \"Z-Axis faulty\" FROM \"Main Input Variables\" WHERE $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1037,219 +1197,8 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "X-Axis faulty",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "ISW_TSN_Demo",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "not active",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "active",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 0
-              },
-              {
-                "color": "semi-dark-green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 20,
-        "y": 0
-      },
-      "id": 30,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/^Last$/",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.2.0",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "Main Input Variables",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "Y-Axis faulty"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Y-Axis faulty",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": "ISW_TSN_Demo",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 0,
-              "text": "not active",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "active",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 0
-              },
-              {
-                "color": "semi-dark-green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 22,
-        "y": 0
-      },
-      "id": 32,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/^Last$/",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.2.0",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "Main Input Variables",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "Z-Axis faulty"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Z-Axis faulty",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "last"
-            ]
-          }
-        }
-      ],
+      "title": "Axis faulty",
+      "transformations": [],
       "type": "stat"
     },
     {
@@ -1260,7 +1209,40 @@
             "align": "left",
             "filterable": false
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "auto",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "mdi",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "manual",
+              "to": "",
+              "type": 1,
+              "value": "4"
+            },
+            {
+              "from": "",
+              "id": 4,
+              "text": "ERROR",
+              "to": "",
+              "type": 1,
+              "value": "3"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1280,7 +1262,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 154
+                "value": 161
               }
             ]
           },
@@ -1292,7 +1274,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 149
+                "value": 155
               }
             ]
           },
@@ -1304,7 +1286,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 97
+                "value": 108
               }
             ]
           },
@@ -1316,7 +1298,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 52
+                "value": 75
               }
             ]
           },
@@ -1328,7 +1310,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 78
+                "value": 102
               },
               {
                 "id": "unit",
@@ -1460,8 +1442,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 24,
-        "x": 0,
+        "w": 8,
+        "x": 13,
         "y": 3
       },
       "id": 10,
@@ -1474,7 +1456,7 @@
           }
         ]
       },
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "targets": [
         {
           "groupBy": [],
@@ -1517,86 +1499,6 @@
                 ],
                 "type": "field"
               }
-            ],
-            [
-              {
-                "params": [
-                  "X-Axis at home"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "X-Axis at neg Endstop"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "X-Axis at pos Endstop"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Y-Axis at home"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Y-Axis at neg Endstop"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Y-Axis at pos Endstop"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Z-Axis at home"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Z-Axis at neg Endstop"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Z-Axis at pos Endstop"
-                ],
-                "type": "field"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "Z-Axis at pos Endstop"
-                ],
-                "type": "field"
-              }
             ]
           ],
           "tags": []
@@ -1606,6 +1508,68 @@
       "timeShift": null,
       "title": "Additional Output Variables Info",
       "type": "table"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 4
+      },
+      "id": 50,
+      "options": {
+        "content": "#Your Logo Here!\n<br/>\n<img src=/public/img/file.name>\nset on HTML",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Logo Place Holder",
+      "type": "text"
     },
     {
       "aliasColors": {},
@@ -1620,6 +1584,7 @@
             "align": null,
             "filterable": false
           },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1808,11 +1773,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1917,7 +1881,8 @@
       "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -1946,11 +1911,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2062,7 +2026,8 @@
       "datasource": "ISW_TSN_Demo",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -2091,11 +2056,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.2.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2211,5 +2175,5 @@
   },
   "timezone": "",
   "title": "TSN_Demo",
-  "version": 3
+  "version": 1
 }
