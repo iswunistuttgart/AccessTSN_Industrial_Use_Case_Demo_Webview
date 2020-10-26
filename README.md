@@ -34,7 +34,7 @@ The initial released version is tested with
 - Grafana v7.2.2 (ad9d408ac2)
 
 
-#Nice to know
+# Nice to know
 The dashboard is not working correctly with grafana version 7.0.2
 Sometimes the time is not shown correctly in the dashboard. If you encounter this you might want to set a timezone in Grafana.
 If you want to access InfluxDB version 1.6.4 from the commandline you need to install _influxdb-client_ 
