@@ -18,6 +18,7 @@ apt-get install grafana
 echo "copying provision files"
 cp -r provisioning/ /etc/grafana/
 chgrp -R grafana /etc/grafana/provisioning/
+cp logos/** /usr/share/grafana/public/img/
 echo "configuring grafana-server to start at boot"
 systemctl daemon-reload
 systemctl enable grafana-server.service
