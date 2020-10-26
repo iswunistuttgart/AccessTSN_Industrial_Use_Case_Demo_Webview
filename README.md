@@ -28,10 +28,11 @@ To be sure everything went as expected check the configuration menu by clicking 
 
 # Tested Version
 The initial released version is tested with 
-Debian GNU/Linux 10 (buster)
-InfluxDB version 1.6.4
-InfluxDB version 1.8.3
-Grafana v7.2.2 (ad9d408ac2)
+- Debian GNU/Linux 10 (buster)
+- InfluxDB version 1.6.4
+- InfluxDB version 1.8.3
+- Grafana v7.2.2 (ad9d408ac2)
+
 
 #Nice to know
 The dashboard is not working correctly with grafana version 7.0.2
