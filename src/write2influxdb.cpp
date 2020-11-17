@@ -24,6 +24,7 @@
  */
 
 #include "../influxdb-cpp/influxdb.hpp"
+#include "../accesstsn_demoapps_common/mk_shminterface.h"
 #include "mk_shminterface.h"
 #include <signal.h>
 #include <sys/mman.h>
