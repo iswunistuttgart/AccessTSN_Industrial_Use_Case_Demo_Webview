@@ -31,14 +31,17 @@
 #include <fcntl.h>
 #include <iostream>
 #include <chrono>
+#include <semaphore.h>
 
 uint8_t run = 1;
 
-struct demoreader_t
-{
+struct demoreader_t {
 	struct mk_mainoutput *mainout;
 	struct mk_maininput *mainin;
 	struct mk_additionaloutput *addout;
+	sem_t *sem_mainout;
+	sem_t *sem_mainin;
+	sem_t *sem_addout;
 	uint32_t period;
 	bool flagmainout;
 	bool flagmainin;
@@ -59,23 +62,20 @@ struct demoreader_t
  * @return influxdb_cpp::server_info filled with param[in]
  */
 influxdb_cpp::server_info initDB(std::string ip, int port, std::string dbname,
-		std::string user, std::string pwd)
-{
+		std::string user, std::string pwd) {
 
 	std::cout << "initializing host: " << ip << ":" << port
 			<< " with database: " << dbname << std::endl;
 	influxdb_cpp::server_info si(ip, port, dbname, user, pwd);
-	std::string resp;//	needed for method influxdb_cpp::create_db(resp, db_name, si)
+	std::string resp; //	needed for method influxdb_cpp::create_db(resp, db_name, si)
 	influxdb_cpp::create_db(resp, dbname, si);
 
 	return si;
 }
 
 /* signal handler */
-void sigfunc(int sig)
-{
-	switch (sig)
-	{
+void sigfunc(int sig) {
+	switch (sig) {
 	case SIGINT:
 		if (run)
 			run = 0;
@@ -89,8 +89,7 @@ void sigfunc(int sig)
 }
 
 /* Print usage message */
-static void usage(char *appname)
-{
+static void usage(char *appname) {
 	fprintf(stderr,
 			"\n"
 					"Usage: %s [options]\n"
@@ -103,15 +102,12 @@ static void usage(char *appname)
 }
 
 /* Evaluate CLI-parameters */
-void evalCLI(int argc, char *argv[0], struct demoreader_t *reader)
-{
+void evalCLI(int argc, char *argv[0], struct demoreader_t *reader) {
 	int c;
 	char *appname = strrchr(argv[0], '/');
 	appname = appname ? 1 + appname : argv[0];
-	while (EOF != (c = getopt(argc, argv, "oiaht:")))
-	{
-		switch (c)
-		{
+	while (EOF != (c = getopt(argc, argv, "oiaht:"))) {
+		switch (c) {
 		case 'o':
 			(*reader).flagmainout = true;
 			break;
@@ -132,8 +128,7 @@ void evalCLI(int argc, char *argv[0], struct demoreader_t *reader)
 		}
 	}
 	if (((*reader).flagmainout == false) && ((*reader).flagmainin == false)
-			&& ((*reader).flagaddout) == false)
-	{
+			&& ((*reader).flagaddout) == false) {
 		printf("At minium, one block of variables needs to be selected\n");
 		exit(0);
 	};
@@ -141,25 +136,63 @@ void evalCLI(int argc, char *argv[0], struct demoreader_t *reader)
 }
 
 /* Opens a shared memory (Readonly) and created it if necessary */
-void* openShM(const char *name, uint32_t size)
-{
+/* Opens a shared memory (Readonly) and created it if necessary */
+void* openShM(const char *name, uint32_t size, sem_t **sem) {
 	int fd;
+	bool init = false;
+	int mpflg = PROT_READ;
 	void *shm;
-	fd = shm_open(name, O_RDONLY | O_CREAT, 777); //TODO change 777 back to 700
-	if (fd == -1)
-	{
+	int semflg = 0;
+	fd = shm_open(name, O_RDONLY, 0666);
+	if ((fd == -1) && (errno == ENOENT)) {
+		//shm not available yet -> create and initialize
+		init = true;
+		fd = shm_open(name, O_RDWR | O_CREAT, 0666);
+		mpflg = PROT_READ | PROT_WRITE;
+		semflg = O_CREAT;
+	}
+	if (fd == -1) {
 		perror("SHM Open failed");
 		return (NULL);
 	}
+
 	ftruncate(fd, size);
-	shm = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
-	if (MAP_FAILED == shm)
-	{
+	shm = mmap(NULL, size, mpflg, MAP_SHARED | MAP_POPULATE, fd, 0);
+	if (MAP_FAILED == shm) {
 		perror("SHM Map failed");
 		shm = NULL;
-		shm_unlink(name);
+		if (init)
+			shm_unlink(name);
 	}
+	*sem = sem_open(name, semflg, 0666, 0);
+	if (*sem == SEM_FAILED) {
+		perror("Semaphore open failed");
+		munmap(shm, size);
+		return (NULL);
+	}
+	if (init) {
+		memset(shm, 0, size);
+		mprotect(shm, size, PROT_READ);
+		sem_post(*sem);
+	}
+
 	return shm;
+}
+
+/* Closes a shared memory */
+int closeShM(void **shm, int len, sem_t **sem) {
+	// not doing unlink of the shared memory because this should only be
+	// done by the writer, so other reader process can still open it
+	int ok;
+	ok = munmap(*shm, len);
+	if (ok < 0)
+		return ok;
+	*shm = NULL;
+	ok = sem_close(*sem);
+	if (ok < 0)
+		return ok;
+	*sem = NULL;
+	return ok;
 }
 
 /**
@@ -174,8 +207,7 @@ void* openShM(const char *name, uint32_t size)
  * @return EXIT_SUCCSESS
  * @todo make ip, port, dbname, usr and pwd changeable
  */
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
 
 	std::string ip = "127.0.0.1";
 	int port = 8086;
@@ -199,24 +231,21 @@ int main(int argc, char *argv[])
 
 	// open and setup shm mapping
 	std::cout << "setting up shared memory" << std::endl;
-	if (reader.flagmainout)
-	{
+	if (reader.flagmainout) {
 		reader.mainout = (struct mk_mainoutput*) openShM(MK_MAINOUTKEY,
-				sizeof(struct mk_mainoutput));
+				sizeof(struct mk_mainoutput), &reader.sem_mainout);
 		if (NULL == reader.mainout)
 			reader.flagmainout = false;
 	}
-	if (reader.flagmainin)
-	{
+	if (reader.flagmainin) {
 		reader.mainin = (struct mk_maininput*) openShM(MK_MAININKEY,
-				sizeof(struct mk_maininput));
+				sizeof(struct mk_maininput), &reader.sem_mainin);
 		if (NULL == reader.mainin)
 			reader.flagmainin = false;
 	}
-	if (reader.flagaddout)
-	{
+	if (reader.flagaddout) {
 		reader.addout = (struct mk_additionaloutput*) openShM(MK_ADDAOUTKEY,
-				sizeof(struct mk_additionaloutput));
+				sizeof(struct mk_additionaloutput), &reader.sem_addout);
 		if (NULL == reader.addout)
 			reader.flagaddout = false;
 	}
@@ -224,79 +253,103 @@ int main(int argc, char *argv[])
 	// mainloop
 	std::cout << "writing into database " << dbname << " every "
 			<< reader.period / 1000000 << " s" << std::endl;
-	while (run)
-	{
+	while (run) {
 		int r = clock_gettime( CLOCK_TAI, &now);
-		if (reader.flagmainout)
-		{
+		if (reader.flagmainout) {
+			if (sem_trywait(reader.sem_mainout) != 0)
+				std::cout << "MK_MAINOUT seems to be blocked by another process"
+						<< std::endl;
+			if (sem_post(reader.sem_mainout) != 0)
+				std::cout << "Something went wrong unlocking semaphore of MK_MAINOUT"
+						<< std::endl;
+
 			influxdb_cpp::builder().meas("Main Output Variables")
 
-			.field("X-Velocity Setpoint", reader.mainout->xvel_set).field(
-					"Y-Velocity Setpoint", reader.mainout->yvel_set).field(
-					"Z-Velocity Setpoint", reader.mainout->zvel_set).field(
-					"Spindlespeed Setpoint", reader.mainout->spindlespeed)
+			.field("X-Velocity Setpoint", reader.mainout->xvel_set)
+			.field("Y-Velocity Setpoint", reader.mainout->yvel_set)
+			.field("Z-Velocity Setpoint", reader.mainout->zvel_set)
+			.field("Spindlespeed Setpoint", reader.mainout->spindlespeed)
 
-			.field("X-Axis enabled", reader.mainout->xenable).field(
-					"Y-Axis enabled", reader.mainout->yenable).field(
-					"Z-Axis enabled", reader.mainout->zenable).field(
-					"Spindle enabled", reader.mainout->spindleenable)
+			.field("X-Axis enabled", reader.mainout->xenable)
+			.field("Y-Axis enabled", reader.mainout->yenable)
+			.field("Z-Axis enabled", reader.mainout->zenable)
+			.field("Spindle enabled", reader.mainout->spindleenable)
 
-			.field("Spindlebrake", reader.mainout->spindlebrake).field(
-					"Machine on", reader.mainout->machinestatus).field(
-					"Emergency Stop activated", reader.mainout->estopstatus)
+			.field("Spindlebrake", reader.mainout->spindlebrake)
+			.field("Machine on", reader.mainout->machinestatus)
+			.field("Emergency Stop activated", reader.mainout->estopstatus)
 
 			.timestamp(now.tv_sec * 1e9 + now.tv_nsec).post_http(si);
 
 		}
-		if (reader.flagaddout)
-		{
+		if (reader.flagaddout) {
+			if (sem_trywait(reader.sem_addout) != 0)
+				std::cout << "MK_ADDOUT seems to be blocked by another process"
+						<< std::endl;
+			if (sem_post(reader.sem_addout) != 0)
+				std::cout << "Something went wrong unlocking semaphore of MK_ADDOUT"
+						<< std::endl;
 			influxdb_cpp::builder().meas("Additional Output Variables")
 
-			.field("X-Position Setpoint", reader.addout->xpos_set).field(
-					"Y-Position Setpoint", reader.addout->ypos_set).field(
-					"Z-Position Setpoint", reader.addout->zpos_set).field(
-					"Feedrate planned", reader.addout->feedrate)
+			.field("X-Position Setpoint", reader.addout->xpos_set)
+			.field("Y-Position Setpoint", reader.addout->ypos_set)
+			.field("Z-Position Setpoint", reader.addout->zpos_set)
+			.field("Feedrate planned", reader.addout->feedrate)
 
-			.field("X-Axis at home", reader.addout->xhome).field(
-					"Y-Axis at home", reader.addout->yhome).field(
-					"Z-Axis at home", reader.addout->zhome).field(
-					"Feedrate override", reader.addout->feedoverride)
+			.field("X-Axis at home", reader.addout->xhome)
+			.field("Y-Axis at home", reader.addout->yhome)
+			.field("Z-Axis at home", reader.addout->zhome)
+			.field("Feedrate override", reader.addout->feedoverride)
 
-			.field("X-Axis at neg Endstop", reader.addout->xhardneg).field(
-					"Y-Axis at neg Endstop", reader.addout->yhardneg).field(
-					"Z-Axis at neg Endstop", reader.addout->zhardneg)
+			.field("X-Axis at neg Endstop", reader.addout->xhardneg)
+			.field("Y-Axis at neg Endstop", reader.addout->yhardneg)
+			.field("Z-Axis at neg Endstop", reader.addout->zhardneg)
 
-			.field("X-Axis at pos Endstop", reader.addout->xhardpos).field(
-					"Y-Axis at pos Endstop", reader.addout->yhardpos).field(
-					"Z-Axis at pos Endstop", reader.addout->zhardpos)
+			.field("X-Axis at pos Endstop", reader.addout->xhardpos)
+			.field("Y-Axis at pos Endstop", reader.addout->yhardpos)
+			.field("Z-Axis at pos Endstop", reader.addout->zhardpos)
 
-			.field("Current Line Number", reader.addout->lineno).field("Uptime",
-					reader.addout->uptime)
-
-			.field("Tool Number", (short int) reader.addout->tool).field("Mode",
-					reader.addout->mode)
+			.field("Tool Number", (short int) reader.addout->tool)
+			.field("Mode", reader.addout->mode)
 
 			.timestamp(now.tv_sec * 1e9 + now.tv_nsec).post_http(si);
 		}
-		if (reader.flagmainin)
-		{
+		if (reader.flagmainin) {
+			if (sem_trywait(reader.sem_mainin) != 0)
+				std::cout << "MK_MAININ seems to be blocked by another process"
+						<< std::endl;
+			if (sem_post(reader.sem_mainin) != 0)
+				std::cout << "Something went wrong unlocking semaphore of MK_MAININ"
+						<< std::endl;
 
 			influxdb_cpp::builder().meas("Main Input Variables")
 
-			.field("X-Position Current", reader.mainin->xpos_cur).field(
-					"Y-Position Current", reader.mainin->ypos_cur).field(
-					"Z-Position Current", reader.mainin->zpos_cur)
+			.field("X-Position Current", reader.mainin->xpos_cur)
+			.field("Y-Position Current", reader.mainin->ypos_cur)
+			.field("Z-Position Current", reader.mainin->zpos_cur)
 
-			.field("X-Axis faulty", reader.mainin->xfault).field(
-					"Y-Axis faulty", reader.mainin->yfault).field(
-					"Z-Axis faulty", reader.mainin->zfault)
+			.field("X-Axis faulty", reader.mainin->xfault)
+			.field("Y-Axis faulty", reader.mainin->yfault)
+			.field("Z-Axis faulty", reader.mainin->zfault)
 
 			.timestamp(now.tv_sec * 1e9 + now.tv_nsec).post_http(si);
 		}
 
-		std::cout << "wrote data for time " << now.tv_sec * 1e9 +now.tv_nsec << std::endl;
+		std::cout << "wrote data for time " << now.tv_sec * 1e9 + now.tv_nsec
+				<< std::endl;
 		usleep(reader.period);
 	}
+
+	// cleanup
+	if (reader.flagmainout)
+		closeShM((void**) &reader.mainout, sizeof(reader.mainout),
+				&reader.sem_mainout);
+	if (reader.flagmainin)
+		closeShM((void**) &reader.mainin, sizeof(reader.mainin),
+				&reader.sem_mainin);
+	if (reader.flagaddout)
+		closeShM((void**) &reader.addout, sizeof(reader.addout),
+				&reader.sem_addout);
 
 	return EXIT_SUCCESS;
 
