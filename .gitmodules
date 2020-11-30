@@ -1,9 +1,6 @@
 [submodule "influxdb-cpp"]
 	path = influxdb-cpp
 	url = https://github.com/orca-zhang/influxdb-cpp
-[submodule "accesstsn_demoapps_common"]
-	path = accesstsn_demoapps_common
-	url = https://git.isw.uni-stuttgart.de/projekte/forschung/2018_AIF_AccessTSN/accesstsn_demoapps/accesstsn_demoapps_common.git
 [submodule "src/demoapps_common"]
 	path = src/demoapps_common
 	url = https://github.com/iswunistuttgart/AccessTSN_Industrial_Use_Case_Demo_Common.git
