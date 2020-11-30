@@ -11,17 +11,18 @@ CFLAGS=$(INC) -g
 ODIR=obj
 LDIR=../lib
 
-LIBS=-lrt
+LIBS=-lrt -pthread
 
-_OBJ = write2influxdb.o
+_OBJ = 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-$(ODIR)/%.o: %.c 
+$(ODIR)/%.o: %.c
+	@mkdir -p $(ODIR)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 all: write2influxdb
 
-write2influxdb: write2influxdb.o
+write2influxdb: write2influxdb.cpp
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
