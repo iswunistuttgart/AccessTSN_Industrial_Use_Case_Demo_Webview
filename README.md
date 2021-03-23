@@ -17,8 +17,7 @@ Using the shell script for installation will add a repo and install a stable ver
 Keep in mind that this repository does not contain code to write any data into the defined shared memory of *mk_shminterface.h*. You either need to develop your own code or get an example code.
 Running the interface will create a database called _tsn_demo_ in InfluxDB. If it already exists all new data will be appended.
 
-<<<<<<< HEAD
-# Installation
+## Installation
 Get the repository and all submodules with: 
 `git clone --recurse-submodules <INSERT_REPO>`
 Use the shellscript from within the repository:
@@ -27,40 +26,18 @@ Switch to the folder _src_ and compile _write2influxdb.cpp_.
 `cd src/`
 `make write2influxdb`
 
-# Run Interface SHM to Influxdb
+## Run Interface SHM to Influxdb
 Run the compiled code with -h flag to see the switches for used variables:
 `sudo ./write2influxdb -h`
 or for use of all variables:
 `sudo ./write2influxdb -aio`
 
-# Use Grafana and verify the installation
-=======
-### Installation
-1. Get the repository and all submodules with:  
-`git clone --recurse-submodules <INSERT_REPO>`
-2. Use the shellscript from within the repository:  
-`sudo ./installscript.sh`
-3. Switch to the folder _src_ and compile _write2influxdb.cpp_.  
-`cd src/`  
-`make write2influxdb`
-
-### Run Interface SHM to Influxdb
-Run the compiled code with -h flag to see the switches for used variables:  
-   `sudo ./write2influxdb -h`  
-or for use of all variables:  
-`sudo ./write2influxdb -aio`
-
-### Use Grafana and verify the installation
->>>>>>> devel
+## Use Grafana and verify the installation
 Use your favorite web browser and navigate to _localhost:3000_
 You will be prompted to sign into Grafana. Since it is the standard installation the user is _admin_ same as the password is _admin_
 To be sure everything went as expected check the configuration menu by clicking the gear symbol on the left. You should see a single data source called _ISW_TSN_DEMO_. Open the configuration by clicking on it and scroll down to the bottom, hit the _test_ button and you should see a green field saying _Data source is working_. After verify the data source switch to _Dashboards -> Manage_ and select TSN_Demo. If data is written to the SHM now you will see the data in the dashboard.
 
-<<<<<<< HEAD
-# Tested Version
-=======
-### Tested Version
->>>>>>> devel
+## Tested Version
 The initial released version is tested with 
 - Debian GNU/Linux 10 (buster)
 - InfluxDB version 1.6.4
@@ -68,11 +45,7 @@ The initial released version is tested with
 - Grafana v7.2.2 (ad9d408ac2)
 
 
-<<<<<<< HEAD
-# Nice to know
-=======
-### Nice to know
->>>>>>> devel
+## Nice to know
 The dashboard is not working correctly with Grafana version 7.0.2
 Sometimes the time is not shown correctly in the dashboard. If you encounter this you might want to set a timezone in Grafana.
 If you want to access InfluxDB version 1.6.4 from the command line you need to install _influxdb-client_ 
