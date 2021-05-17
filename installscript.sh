@@ -25,27 +25,103 @@
 # * SOFTWARE.
 # */
 
+echo "Building and installing of Webview Component of the AccessTSN Industrial Use Case Demo"
+echo "Checking for prerequisites"
 
-echo "installing InfluxDB"
+if ! command -v apt-get &> /dev/null
+   then
+       echo "Error: apt-get not found! Please install apt-get."
+       exit 1
+   else
+       echo "apt-get found"
+fi
+
+if ! command -v wget &> /dev/null
+   then
+       echo "Error: wget not found! Please install wget."
+       exit 1
+   else
+       echo "wget found"
+fi
+
+if ! command -v tee &> /dev/null
+   then
+       echo "Error: apt-get not found! Please install tee."
+       exit 1
+   else
+       echo "tee found"
+fi
+
+if ! command -v gcc &> /dev/null
+   then
+       echo "Error: gcc not found! Please install gcc."
+       exit 1
+   else
+       echo "gcc found"
+fi
+
+if ! command -v make &> /dev/null
+   then
+       echo "Error: make not found! Please install make."
+       exit 1
+   else
+       echo "make found"
+fi
+
+if ! command -v dpkg &> /dev/null
+   then
+       echo "Error: dpkg not found! Please install dpkg."
+       exit 1
+   else
+       echo "dpkg found"
+fi
+
+dpkg -s build-essential &> /dev/null
+rtn=$?
+if [ $rtn -eq 0 ]
+   then
+       echo "build-essential installed"
+   else
+       echo "Error: build-essential not installed! Please install build-essential."
+       exit 1
+fi
+
+echo "Cloning and updating submodules"
+git submodule init
+git submodule update
+
+echo "Installing InfluxDB"
 wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
 source /etc/os-release
 echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
 apt-get update && sudo apt-get install influxdb
-systemctl unmask influxdb.service
+sudo systemctl unmask influxdb.service
 echo "influxdb -version"
-systemctl start influxdb
-echo "installing Grafana"
-apt-get install -y apt-transport-https
-apt-get install -y software-properties-common wget
+sudo systemctl start influxdb
+echo "Installing Grafana"
+sudo apt-get install -y apt-transport-https
+sudo apt-get install -y software-properties-common wget
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-apt-get update
-apt-get install grafana
-echo "copying provision files"
-cp -r provisioning/ /etc/grafana/
-chgrp -R grafana /etc/grafana/provisioning/
-cp logos/** /usr/share/grafana/public/img/
-echo "configuring grafana-server to start at boot"
-systemctl daemon-reload
-systemctl enable grafana-server.service
-systemctl start grafana-server
+sudo apt-get update
+sudo apt-get install grafana
+echo "Copying provision files"
+sudo cp -r provisioning/ /etc/grafana/
+sudo chgrp -R grafana /etc/grafana/provisioning/
+sudo cp logos/** /usr/share/grafana/public/img/
+echo "Configuring grafana-server to start at boot"
+sudo systemctl daemon-reload
+sudo systemctl enable grafana-server.service
+sudo systemctl start grafana-server
+
+echo "Building AccessTSN Databaseconnector application using make"
+cd src
+make write2influxdb
+cd ..
+
+echo "Finished building application."
+echo "The 'write2influxdb' application can be found in the 'src' subdirectory."
+echo "It can be run with 'sudo write2influxdb -aio' (writing all variables)."
+echo "For other options, see the CLI help using 'write2influxdb -h'."
+exit 0
+
