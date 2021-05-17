@@ -7,7 +7,7 @@ This work is a result of the AccessTSN-Project. More information on the project 
 
 ## The Industrial Use Case Demo - Webview Git-project
 
-The AccessTSN Industrial Use Case Demo consists of multiple Git-projects, each holding the code to one component of the demonstration. This is the *Webview* project. This repository contains an interface to write data of a shared memory (defined in *mk_shminterface.h*) into InfluxDB. It also contains a connection to a Grafana installation and a dashboard to visualize the data written into InfluxDB. You can easily get a working stack by using the provided *installscript.sh* shell script. But you still need to write the data into the shared memory yourself. This can be done with the other components of the AccessTSN Industrial Use Case demo.
+The AccessTSN Industrial Use Case Demo consists of multiple Git-projects, each holding the code to one component of the demonstration. This is the *Webview* project. This repository contains an database connector to write data of a shared memory (defined in *mk_shminterface.h*) into InfluxDB. It also contains a connection to a Grafana installation and a dashboard to visualize the data written into InfluxDB. You can easily get a working stack by using the provided *installscript.sh* shell script. But you still need to write the data into the shared memory yourself. This can be done with the other components of the AccessTSN Industrial Use Case demo.
 
 The main repository for AccessTSN Industrial Use Case Demo can be found on Github: https://github.com/iswunistuttgart/AccessTSN_Industrial_Use_Case_Demo
 
@@ -20,14 +20,18 @@ Running the interface will create a database called _tsn_demo_ in InfluxDB. If i
 ### Installation
 1. Get the repository and all submodules with:  
 `git clone --recurse-submodules <INSERT_REPO>`
-2. Use the shellscript from within the repository:  
+2. Use the bashscript from within the repository:  
 `sudo ./installscript.sh`
-3. Switch to the folder _src_ and compile _write2influxdb.cpp_.  
+This will first check for dependencies and then install, setup and start InfluxDB and Grafana. Then it will build the database connector for the Industrial Use Case Demo _write2influxdb_.
+
+### Manual building of the database connector
+Switch to the folder _src_ and compile _write2influxdb.cpp_.  
 `cd src/`  
 `make write2influxdb`
 
-### Run Interface SHM to Influxdb
-Run the compiled code with -h flag to see the switches for used variables:  
+### Running the database connector
+The database connector is used to write data from the SHM Interface to Influxdb.
+After building the database connector can be found in the _src_ subdirectory. Run the compiled code with -h flag to see the switches for used variables:  
    `sudo ./write2influxdb -h`  
 or for use of all variables:  
 `sudo ./write2influxdb -aio`
