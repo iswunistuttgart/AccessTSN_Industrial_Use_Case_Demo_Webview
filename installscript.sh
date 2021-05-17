@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #// SPDX-License-Identifier: (MIT)
 #/*
@@ -86,17 +86,33 @@ if [ $rtn -eq 0 ]
        exit 1
 fi
 
+if ! command -v  lsb_release &> /dev/null
+   then
+       echo "Error: lsb_release not found! Please install package lsb-release."
+       exit 1
+   else
+       echo "lsb_release found"
+fi
+
 echo "Cloning and updating submodules"
 git submodule init
 git submodule update
 
 echo "Installing InfluxDB"
-wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+wget -q -O - https://repos.influxdata.com/influxdb.key | sudo apt-key add -
 source /etc/os-release
 echo "deb https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
-apt-get update && sudo apt-get install influxdb
+sudo apt-get update
+sudo apt-get install influxdb
 sudo systemctl unmask influxdb.service
-echo "influxdb -version"
+if ! systemctl status influxdb &>/dev/null
+    then
+	echo "Error: Installation of InfluxDB failed."
+	exit 1
+    else
+	echo "Installation of InfluxDB successful."
+fi	
+
 sudo systemctl start influxdb
 echo "Installing Grafana"
 sudo apt-get install -y apt-transport-https
@@ -105,6 +121,14 @@ wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 sudo apt-get update
 sudo apt-get install grafana
+if ! systemctl status grafana-server &>/dev/null
+    then
+	echo "Error: Installation of Grafana failed."
+	exit 1
+    else
+	echo "Installation of Grafana successful."
+fi
+
 echo "Copying provision files"
 sudo cp -r provisioning/ /etc/grafana/
 sudo chgrp -R grafana /etc/grafana/provisioning/
